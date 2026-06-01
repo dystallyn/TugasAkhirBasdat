@@ -1,20 +1,20 @@
-# Database Minuman
+# 🥤 Database Minuman 🥤
 
-## Tugas Akhir Mata Kuliah Basis Data
+## Tugas Akhir Mata Kuliah Basis Data📊
 
 ### Dosen Pengampu
 Fais Al Huda, S.Kom., M.Kom.
 
-### Anggota Kelompok
+### Anggota Kelompok ⋆⭒˚𖠋𖠋𖠋*.⋆
 
 1. Allyndra Dyalista Dardurani - 255150201111033
 2. Kindly Besthari Turnip - 255150207111075
-3. Aisyah Al Hudri - [NIM]
-4. Ravina Natasha - [NIM]
+3. Aisyah Al Hudri - 255150207111080
+4. Ravina Natasha - 255150219111004
 
 ---
 
-## Deskripsi Proyek
+## Deskripsi Proyek🏗️
 
 Database Minuman merupakan proyek tugas akhir mata kuliah Basis Data yang bertujuan untuk mengelola data minuman secara terstruktur dan terintegrasi. Sistem ini dirancang untuk membantu proses penyimpanan, pencarian, penambahan, pembaruan, dan penghapusan data minuman melalui antarmuka grafis yang terhubung dengan basis data.
 
@@ -22,9 +22,9 @@ Proyek ini mengimplementasikan konsep-konsep basis data relasional seperti pembu
 
 ---
 
-## Teknologi yang Digunakan
+## Teknologi yang Digunakan🌐
 
-### Microsoft SQL Server (SSMS)
+### Microsoft SQL Server (SSMS)🛢
 
 Microsoft SQL Server Management Studio (SSMS) digunakan sebagai sistem manajemen basis data untuk menyimpan dan mengelola seluruh data pada aplikasi. Database dirancang menggunakan tabel-tabel yang saling berhubungan sehingga data dapat dikelola secara efisien dan konsisten.
 
@@ -40,7 +40,7 @@ SQL (Structured Query Language) digunakan untuk melakukan berbagai operasi pada 
 - Membuat relasi antar tabel
 - Menjalankan query dan laporan
 
-### Java
+### Java♨️
 
 Bahasa pemrograman Java digunakan untuk membangun logika aplikasi dan menghubungkan antarmuka pengguna dengan database SQL Server.
 
@@ -62,7 +62,7 @@ JDBC (Java Database Connectivity) digunakan sebagai penghubung antara aplikasi J
 
 ---
 
-## Fitur Sistem
+## Fitur Sistem📌
 
 - Menampilkan data minuman
 - Menambahkan data minuman baru
@@ -73,7 +73,7 @@ JDBC (Java Database Connectivity) digunakan sebagai penghubung antara aplikasi J
 
 ---
 
-## Cara Menjalankan Program
+## Cara Menjalankan Program📝
 
 1. Install Microsoft SQL Server dan SQL Server Management Studio (SSMS).
 2. Import file database ke SQL Server.
@@ -84,6 +84,6 @@ JDBC (Java Database Connectivity) digunakan sebagai penghubung antara aplikasi J
 
 ---
 
-## Tujuan Proyek
+## Tujuan Proyek🪜
 
 Proyek ini dibuat untuk memenuhi tugas akhir Mata Kuliah Basis Data sekaligus mengimplementasikan konsep perancangan database dan pengembangan aplikasi berbasis Java yang terhubung dengan sistem manajemen basis data relasional.
