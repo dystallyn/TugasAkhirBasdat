@@ -13,8 +13,6 @@ import koneksi.Koneksi;
 import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class FormDashboard extends JFrame {
 
@@ -51,14 +49,12 @@ public class FormDashboard extends JFrame {
         JButton btnDashboard = menuButton("Dashboard", 30, 160, true);
         JButton btnData = menuButton("Data Minuman", 30, 215, false);
         JButton btnLaporan = menuButton("Laporan", 30, 270, false);
-        JButton btnPengaturan = menuButton("Pengaturan", 30, 325, false);
         JButton btnLogout = menuButton("Logout", 30, 650, false);
         btnLogout.setForeground(Color.RED);
 
         sidebar.add(btnDashboard);
         sidebar.add(btnData);
         sidebar.add(btnLaporan);
-        sidebar.add(btnPengaturan);
         sidebar.add(btnLogout);
 
         btnData.addActionListener(e -> {
@@ -68,11 +64,6 @@ public class FormDashboard extends JFrame {
 
         btnLaporan.addActionListener(e -> {
             new FormLaporan().setVisible(true);
-            dispose();
-        });
-
-        btnPengaturan.addActionListener(e -> {
-            new FormPengaturan().setVisible(true);
             dispose();
         });
 
@@ -110,9 +101,9 @@ public class FormDashboard extends JFrame {
         lblInfo.setBounds(35, 15, 250, 25);
         info.add(lblInfo);
 
-        String waktuSekarang = new SimpleDateFormat("dd MMMM yyyy, HH:mm 'WIB'").format(new Date());
-
-        JLabel lblTanggal = new JLabel("Laporan terakhir diperbarui: " + waktuSekarang);
+        JLabel lblTanggal = new JLabel(
+                "Dashboard menampilkan ringkasan data minuman secara real-time"
+        );
         lblTanggal.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         lblTanggal.setBounds(35, 45, 500, 25);
         info.add(lblTanggal);
