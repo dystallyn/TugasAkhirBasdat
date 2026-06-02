@@ -8,14 +8,17 @@ package form;
  *
  * @author KINDLY
  */
+
 import koneksi.Koneksi;
 import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FormDashboard extends JFrame {
 
-    private JLabel lblTotalBarang, lblTotalStok, lblStokMenipis, lblStokHabis, lblTotalKategori;
+    private JLabel lblTotalMinuman, lblTotalStok, lblStokMenipis, lblStokHabis, lblTotalKategori;
 
     public FormDashboard() {
         initComponents();
@@ -23,30 +26,33 @@ public class FormDashboard extends JFrame {
     }
 
     private void initComponents() {
-        setTitle("Dashboard");
-        setSize(1000, 600);
+        setTitle("Dashboard Inventaris Minuman");
+        setSize(1366, 768);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         getContentPane().setBackground(Color.WHITE);
 
-        JPanel sidebar = new JPanel();
-        sidebar.setBounds(0, 0, 180, 600);
+        JPanel sidebar = new JPanel(null);
+        sidebar.setBounds(0, 0, 230, 900);
         sidebar.setBackground(new Color(250, 250, 255));
-        sidebar.setLayout(null);
         add(sidebar);
 
-        JLabel lblLogo = new JLabel("Inventaris\nMinuman");
-        lblLogo.setText("<html><b>Inventaris</b><br>Minuman</html>");
-        lblLogo.setBounds(35, 30, 120, 50);
+        JLabel lblLogo = new JLabel(getIcon("/assets/logo_minuman.png", 48, 48));
+        lblLogo.setBounds(30, 35, 48, 48);
         sidebar.add(lblLogo);
 
-        JButton btnDashboard = menuButton("Dashboard", 25, 120, true);
-        JButton btnData = menuButton("Data Barang", 25, 170, false);
-        JButton btnLaporan = menuButton("Laporan", 25, 220, false);
-        JButton btnPengaturan = menuButton("Pengaturan", 25, 270, false);
-        JButton btnLogout = menuButton("Logout", 25, 500, false);
+        JLabel lblNama = new JLabel("<html><b>Inventaris</b><br>Minuman</html>");
+        lblNama.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblNama.setBounds(90, 32, 120, 55);
+        sidebar.add(lblNama);
 
+        JButton btnDashboard = menuButton("Dashboard", 30, 160, true);
+        JButton btnData = menuButton("Data Minuman", 30, 215, false);
+        JButton btnLaporan = menuButton("Laporan", 30, 270, false);
+        JButton btnPengaturan = menuButton("Pengaturan", 30, 325, false);
+        JButton btnLogout = menuButton("Logout", 30, 650, false);
         btnLogout.setForeground(Color.RED);
 
         sidebar.add(btnDashboard);
@@ -70,57 +76,54 @@ public class FormDashboard extends JFrame {
             dispose();
         });
 
-        btnLogout.addActionListener(e -> {
-            dispose();
-        });
+        btnLogout.addActionListener(e -> dispose());
 
         JLabel lblTitle = new JLabel("Dashboard");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblTitle.setBounds(220, 35, 300, 30);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        lblTitle.setBounds(300, 60, 350, 40);
         add(lblTitle);
 
         JLabel lblSub = new JLabel("Ringkasan inventaris minuman");
-        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblSub.setBounds(220, 65, 300, 25);
+        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblSub.setBounds(300, 100, 350, 25);
         add(lblSub);
 
-        JLabel lblAdmin = new JLabel("A  Admin");
-        lblAdmin.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        lblAdmin.setBounds(830, 35, 120, 30);
-        add(lblAdmin);
-
         JLabel lblWelcome = new JLabel("Selamat datang, Admin. Berikut ringkasan inventaris.");
-        lblWelcome.setBounds(220, 120, 500, 25);
+        lblWelcome.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblWelcome.setBounds(300, 160, 600, 25);
         add(lblWelcome);
 
-        lblTotalBarang = createCard("Total Barang", "0", "jenis terdaftar", 220, 175, new Color(245, 240, 255));
-        lblTotalStok = createCard("Total Stok", "0", "unit tersedia", 370, 175, new Color(240, 255, 247));
-        lblStokMenipis = createCard("Stok Menipis", "0", "perlu restock", 520, 175, new Color(255, 249, 238));
-        lblStokHabis = createCard("Stok Habis", "0", "stok = 0 unit", 670, 175, new Color(255, 240, 240));
-        lblTotalKategori = createCard("Total Kategori", "0", "kategori minuman", 820, 175, new Color(240, 247, 255));
+        lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 220, new Color(245, 240, 255), "/assets/total_minuman.png");
+        lblTotalStok = card("Total Stok", "0", "unit tersedia", 500, 220, new Color(240, 255, 247), "/assets/total_stok.png");
+        lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 700, 220, new Color(255, 249, 238), "/assets/stok_menipis.png");
+        lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 900, 220, new Color(255, 240, 240), "/assets/stok_habis.png");
+        lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1100, 220, new Color(240, 247, 255), "/assets/total_kategori.png");
 
-        JPanel info = new JPanel();
-        info.setLayout(null);
-        info.setBounds(220, 360, 720, 70);
+        JPanel info = new JPanel(null);
+        info.setBounds(300, 450, 970, 85);
         info.setBackground(new Color(248, 247, 255));
         info.setBorder(BorderFactory.createLineBorder(new Color(230, 225, 250)));
         add(info);
 
         JLabel lblInfo = new JLabel("Informasi Terbaru");
-        lblInfo.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        lblInfo.setBounds(30, 12, 250, 25);
+        lblInfo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblInfo.setBounds(35, 15, 250, 25);
         info.add(lblInfo);
 
-        JLabel lblTanggal = new JLabel("Laporan terakhir diperbarui: 02 Juni 2026, 13:45 WIB");
-        lblTanggal.setBounds(30, 35, 400, 25);
+        String waktuSekarang = new SimpleDateFormat("dd MMMM yyyy, HH:mm 'WIB'").format(new Date());
+
+        JLabel lblTanggal = new JLabel("Laporan terakhir diperbarui: " + waktuSekarang);
+        lblTanggal.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblTanggal.setBounds(35, 45, 500, 25);
         info.add(lblTanggal);
     }
 
     private JButton menuButton(String text, int x, int y, boolean active) {
         JButton btn = new JButton(text);
-        btn.setBounds(x, y, 130, 35);
+        btn.setBounds(x, y, 170, 42);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
 
         if (active) {
             btn.setBackground(new Color(98, 55, 230));
@@ -133,47 +136,57 @@ public class FormDashboard extends JFrame {
         return btn;
     }
 
-    private JLabel createCard(String title, String value, String desc, int x, int y, Color color) {
-        JPanel card = new JPanel();
-        card.setLayout(null);
-        card.setBounds(x, y, 130, 130);
-        card.setBackground(color);
-        card.setBorder(BorderFactory.createLineBorder(new Color(225, 225, 235)));
-        add(card);
+    private JLabel card(String title, String value, String desc, int x, int y, Color color, String iconPath) {
+        JPanel panel = new JPanel(null);
+        panel.setBounds(x, y, 170, 155);
+        panel.setBackground(color);
+        panel.setBorder(BorderFactory.createLineBorder(new Color(225, 225, 235)));
+        add(panel);
+
+        JLabel lblIcon = new JLabel(getIcon(iconPath, 42, 42));
+        lblIcon.setBounds(18, 15, 42, 42);
+        panel.add(lblIcon);
 
         JLabel lblTitle = new JLabel(title);
-        lblTitle.setBounds(15, 20, 110, 20);
-        card.add(lblTitle);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblTitle.setBounds(18, 65, 145, 22);
+        panel.add(lblTitle);
 
         JLabel lblValue = new JLabel(value);
-        lblValue.setFont(new Font("Segoe UI", Font.BOLD, 28));
-        lblValue.setBounds(15, 50, 100, 35);
-        card.add(lblValue);
+        lblValue.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        lblValue.setBounds(18, 90, 120, 38);
+        panel.add(lblValue);
 
         JLabel lblDesc = new JLabel(desc);
-        lblDesc.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        lblDesc.setBounds(15, 90, 110, 20);
-        card.add(lblDesc);
+        lblDesc.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblDesc.setBounds(18, 128, 140, 20);
+        panel.add(lblDesc);
 
         return lblValue;
+    }
+
+    private ImageIcon getIcon(String path, int width, int height) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+        Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(img);
     }
 
     private void loadDashboard() {
         try {
             Connection conn = Koneksi.getConnection();
 
-            lblTotalBarang.setText(getSingleValue(conn, "SELECT COUNT(*) FROM Barang"));
-            lblTotalStok.setText(getSingleValue(conn, "SELECT ISNULL(SUM(stok), 0) FROM Barang"));
-            lblStokMenipis.setText(getSingleValue(conn, "SELECT COUNT(*) FROM Barang WHERE stok <= 10 AND stok > 0"));
-            lblStokHabis.setText(getSingleValue(conn, "SELECT COUNT(*) FROM Barang WHERE stok = 0"));
-            lblTotalKategori.setText(getSingleValue(conn, "SELECT COUNT(DISTINCT kategori) FROM Barang"));
+            lblTotalMinuman.setText(getValue(conn, "SELECT COUNT(*) FROM Barang"));
+            lblTotalStok.setText(getValue(conn, "SELECT ISNULL(SUM(stok), 0) FROM Barang"));
+            lblStokMenipis.setText(getValue(conn, "SELECT COUNT(*) FROM Barang WHERE stok <= 10 AND stok > 0"));
+            lblStokHabis.setText(getValue(conn, "SELECT COUNT(*) FROM Barang WHERE stok = 0"));
+            lblTotalKategori.setText(getValue(conn, "SELECT COUNT(DISTINCT kategori) FROM Barang"));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal load dashboard: " + e.getMessage());
         }
     }
 
-    private String getSingleValue(Connection conn, String sql) throws SQLException {
+    private String getValue(Connection conn, String sql) throws SQLException {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(sql);
 
