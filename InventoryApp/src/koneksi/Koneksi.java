@@ -18,7 +18,7 @@ public class Koneksi {
         try {
 
             String url =
-                "jdbc:sqlserver://LAPTOP-GMPEQVN5;"
+                "jdbc:sqlserver://LAPTOP-4MF4DDF5;"
                 + "databaseName=InventoryDB;"
                 + "encrypt=false;"
                 + "trustServerCertificate=true";

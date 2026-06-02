@@ -13,3 +13,12 @@ CREATE TABLE Barang (
 );
 GO
 
+USE InventoryDB;
+GO
+
+CREATE USER Db_Con FOR LOGIN Db_Con;
+GO
+
+ALTER ROLE db_owner ADD MEMBER Db_Con;
+GO
+
