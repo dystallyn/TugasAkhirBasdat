@@ -17,70 +17,66 @@ public class FormDeleteBarang extends JFrame {
     private int idBarang;
     private FormDataMinuman parent;
 
-    private JLabel lblKode;
-    private JLabel lblNama;
-    private JLabel lblKategori;
-    private JLabel lblStok;
-    private JLabel lblHarga;
-    private JLabel lblTanggal;
+    private JLabel lblId, lblKode, lblNama, lblKategori, lblStok, lblHarga, lblTanggal;
 
     public FormDeleteBarang(FormDataMinuman parent, int idBarang) {
-
         this.parent = parent;
         this.idBarang = idBarang;
 
         setTitle("Delete Barang");
-        setSize(450, 400);
+        setSize(420, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
 
         JLabel lblTitle = new JLabel("Yakin ingin menghapus data ini?");
-        lblTitle.setBounds(100, 20, 250, 30);
+        lblTitle.setBounds(100, 25, 250, 30);
         add(lblTitle);
 
+        lblId = new JLabel();
+        lblId.setBounds(50, 80, 300, 25);
+        add(lblId);
+
         lblKode = new JLabel();
-        lblKode.setBounds(40, 80, 300, 25);
+        lblKode.setBounds(50, 110, 300, 25);
         add(lblKode);
 
         lblNama = new JLabel();
-        lblNama.setBounds(40, 110, 300, 25);
+        lblNama.setBounds(50, 140, 300, 25);
         add(lblNama);
 
         lblKategori = new JLabel();
-        lblKategori.setBounds(40, 140, 300, 25);
+        lblKategori.setBounds(50, 170, 300, 25);
         add(lblKategori);
 
         lblStok = new JLabel();
-        lblStok.setBounds(40, 170, 300, 25);
+        lblStok.setBounds(50, 200, 300, 25);
         add(lblStok);
 
         lblHarga = new JLabel();
-        lblHarga.setBounds(40, 200, 300, 25);
+        lblHarga.setBounds(50, 230, 300, 25);
         add(lblHarga);
 
         lblTanggal = new JLabel();
-        lblTanggal.setBounds(40, 230, 300, 25);
+        lblTanggal.setBounds(50, 260, 300, 25);
         add(lblTanggal);
 
         JButton btnBatal = new JButton("Batal");
-        btnBatal.setBounds(80, 300, 120, 35);
+        btnBatal.setBounds(80, 310, 100, 35);
         add(btnBatal);
 
         JButton btnHapus = new JButton("Hapus");
-        btnHapus.setBounds(220, 300, 120, 35);
+        btnHapus.setBounds(220, 310, 100, 35);
         add(btnHapus);
 
         btnBatal.addActionListener(e -> dispose());
         btnHapus.addActionListener(e -> hapusData());
 
-        tampilData();
+        loadData();
     }
 
-    private void tampilData() {
-
+    private void loadData() {
         try {
-
             Connection conn = Koneksi.getConnection();
 
             String sql = "SELECT * FROM Barang WHERE idBarang=?";
@@ -90,46 +86,36 @@ public class FormDeleteBarang extends JFrame {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-
+                lblId.setText("ID Barang : " + rs.getInt("idBarang"));
                 lblKode.setText("Kode Barang : " + rs.getString("kodeBarang"));
                 lblNama.setText("Nama Barang : " + rs.getString("namaBarang"));
                 lblKategori.setText("Kategori : " + rs.getString("kategori"));
                 lblStok.setText("Stok : " + rs.getInt("stok"));
                 lblHarga.setText("Harga : " + rs.getBigDecimal("harga"));
                 lblTanggal.setText("Tanggal Masuk : " + rs.getDate("tanggalMasuk"));
-
             }
 
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(this, e.getMessage());
-
+            JOptionPane.showMessageDialog(this, "Gagal load data: " + e.getMessage());
         }
     }
 
     private void hapusData() {
-
         try {
-
             Connection conn = Koneksi.getConnection();
 
             String sql = "DELETE FROM Barang WHERE idBarang=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-
             ps.setInt(1, idBarang);
 
             ps.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Data berhasil dihapus");
-
+            JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
             parent.refreshData();
-
             dispose();
 
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(this, e.getMessage());
-
+            JOptionPane.showMessageDialog(this, "Gagal hapus data: " + e.getMessage());
         }
     }
 }

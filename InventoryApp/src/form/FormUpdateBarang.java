@@ -29,53 +29,25 @@ public class FormUpdateBarang extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
 
-        JLabel lblKode = new JLabel("Kode Barang");
-        lblKode.setBounds(30, 30, 120, 25);
-        add(lblKode);
+        addLabel("Kode Barang", 30);
+        txtKode = addText(30);
 
-        txtKode = new JTextField();
-        txtKode.setBounds(160, 30, 180, 30);
-        add(txtKode);
+        addLabel("Nama Barang", 75);
+        txtNama = addText(75);
 
-        JLabel lblNama = new JLabel("Nama Barang");
-        lblNama.setBounds(30, 75, 120, 25);
-        add(lblNama);
-
-        txtNama = new JTextField();
-        txtNama.setBounds(160, 75, 180, 30);
-        add(txtNama);
-
-        JLabel lblKategori = new JLabel("Kategori");
-        lblKategori.setBounds(30, 120, 120, 25);
-        add(lblKategori);
-
+        addLabel("Kategori", 120);
         cmbKategori = new JComboBox<>(new String[]{"Teh", "Jus", "Air Mineral", "Kopi", "Susu"});
         cmbKategori.setBounds(160, 120, 180, 30);
         add(cmbKategori);
 
-        JLabel lblStok = new JLabel("Stok");
-        lblStok.setBounds(30, 165, 120, 25);
-        add(lblStok);
+        addLabel("Stok", 165);
+        txtStok = addText(165);
 
-        txtStok = new JTextField();
-        txtStok.setBounds(160, 165, 180, 30);
-        add(txtStok);
+        addLabel("Harga", 210);
+        txtHarga = addText(210);
 
-        JLabel lblHarga = new JLabel("Harga");
-        lblHarga.setBounds(30, 210, 120, 25);
-        add(lblHarga);
-
-        txtHarga = new JTextField();
-        txtHarga.setBounds(160, 210, 180, 30);
-        add(txtHarga);
-
-        JLabel lblTanggal = new JLabel("Tanggal Masuk");
-        lblTanggal.setBounds(30, 255, 120, 25);
-        add(lblTanggal);
-
-        txtTanggal = new JTextField();
-        txtTanggal.setBounds(160, 255, 180, 30);
-        add(txtTanggal);
+        addLabel("Tanggal Masuk", 255);
+        txtTanggal = addText(255);
 
         JButton btnBatal = new JButton("Batal");
         btnBatal.setBounds(80, 320, 100, 35);
@@ -89,6 +61,19 @@ public class FormUpdateBarang extends JFrame {
         btnUpdate.addActionListener(e -> updateData());
 
         loadDataLama();
+    }
+
+    private void addLabel(String text, int y) {
+        JLabel label = new JLabel(text);
+        label.setBounds(30, y, 120, 25);
+        add(label);
+    }
+
+    private JTextField addText(int y) {
+        JTextField text = new JTextField();
+        text.setBounds(160, y, 180, 30);
+        add(text);
+        return text;
     }
 
     private void loadDataLama() {
@@ -141,3 +126,5 @@ public class FormUpdateBarang extends JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal update data: " + e.getMessage());
         }
+    }
+}

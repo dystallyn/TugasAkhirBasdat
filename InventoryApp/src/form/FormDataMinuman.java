@@ -35,108 +35,71 @@ public class FormDataMinuman extends JFrame {
         setLayout(null);
         getContentPane().setBackground(Color.WHITE);
 
-        JPanel sidebar = new JPanel(null);
-        sidebar.setBounds(0, 0, 180, 600);
-        sidebar.setBackground(new Color(250, 250, 255));
-        add(sidebar);
-
-        JLabel lblLogo = new JLabel("<html><b>Inventaris</b><br>Minuman</html>");
-        lblLogo.setBounds(35, 30, 120, 50);
-        sidebar.add(lblLogo);
-
-        JButton btnDashboard = menuButton("Dashboard", 25, 110, false);
-        JButton btnData = menuButton("Data Barang", 25, 160, true);
-        JButton btnLaporan = menuButton("Laporan", 25, 210, false);
-        JButton btnPengaturan = menuButton("Pengaturan", 25, 260, false);
-        JButton btnLogout = menuButton("Logout", 25, 500, false);
-        btnLogout.setForeground(Color.RED);
-
-        sidebar.add(btnDashboard);
-        sidebar.add(btnData);
-        sidebar.add(btnLaporan);
-        sidebar.add(btnPengaturan);
-        sidebar.add(btnLogout);
-
         JLabel lblTitle = new JLabel("Data Barang");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblTitle.setBounds(220, 30, 250, 30);
+        lblTitle.setBounds(30, 25, 250, 30);
         add(lblTitle);
 
-        JLabel lblSub = new JLabel("Kelola data inventaris minuman");
-        lblSub.setBounds(220, 60, 300, 25);
-        add(lblSub);
-
         txtCari = new JTextField();
-        txtCari.setBounds(220, 105, 290, 35);
+        txtCari.setBounds(30, 80, 300, 35);
         add(txtCari);
 
         cmbKategori = new JComboBox<>(new String[]{
             "Semua Kategori", "Teh", "Jus", "Air Mineral", "Kopi", "Susu"
         });
-        cmbKategori.setBounds(530, 105, 160, 35);
+        cmbKategori.setBounds(350, 80, 170, 35);
         add(cmbKategori);
 
-        JButton btnStokMenipis = new JButton("⚠ Stok Menipis");
-        btnStokMenipis.setBounds(710, 105, 140, 35);
-        add(btnStokMenipis);
+        JButton btnCari = new JButton("Cari");
+        btnCari.setBounds(540, 80, 90, 35);
+        add(btnCari);
 
-        JButton btnTambah = new JButton("+ Tambah");
-        btnTambah.setBounds(870, 105, 100, 35);
-        btnTambah.setBackground(new Color(98, 55, 230));
-        btnTambah.setForeground(Color.WHITE);
+        JButton btnTambah = new JButton("Tambah");
+        btnTambah.setBounds(650, 80, 100, 35);
         add(btnTambah);
 
+        JButton btnUpdate = new JButton("Update");
+        btnUpdate.setBounds(760, 80, 100, 35);
+        add(btnUpdate);
+
+        JButton btnDelete = new JButton("Delete");
+        btnDelete.setBounds(870, 80, 100, 35);
+        add(btnDelete);
+
         model = new DefaultTableModel();
-        model.addColumn("ID Minuman");
-        model.addColumn("Kode Minuman");
-        model.addColumn("Nama Minuman");
+        model.addColumn("ID Barang");
+        model.addColumn("Kode Barang");
+        model.addColumn("Nama Barang");
         model.addColumn("Kategori");
         model.addColumn("Stok");
         model.addColumn("Harga");
         model.addColumn("Tanggal Masuk");
-        model.addColumn("Aksi");
 
         tblMinuman = new JTable(model);
-        tblMinuman.setRowHeight(32);
+        tblMinuman.setRowHeight(28);
 
-        JScrollPane scrollPane = new JScrollPane(tblMinuman);
-        scrollPane.setBounds(220, 160, 750, 320);
-        add(scrollPane);
+        JScrollPane scroll = new JScrollPane(tblMinuman);
+        scroll.setBounds(30, 140, 940, 350);
+        add(scroll);
 
         lblTotalData = new JLabel("Menampilkan 0 data");
-        lblTotalData.setBounds(220, 500, 250, 25);
+        lblTotalData.setBounds(30, 505, 300, 25);
         add(lblTotalData);
 
-        btnDashboard.addActionListener(e -> {
-            new FormDashboard().setVisible(true);
-            dispose();
-        });
-
-        btnTambah.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Buka FormTambahBarang");
-        });
-
-        txtCari.addActionListener(e -> loadData());
+        btnCari.addActionListener(e -> loadData());
         cmbKategori.addActionListener(e -> loadData());
 
-        btnStokMenipis.addActionListener(e -> loadStokMenipis());
+        btnTambah.addActionListener(e -> {
+            new FormTambahBarang(this).setVisible(true);
+        });
+
+        btnUpdate.addActionListener(e -> updateData());
+
+        btnDelete.addActionListener(e -> deleteData());
     }
 
-    private JButton menuButton(String text, int x, int y, boolean active) {
-        JButton btn = new JButton(text);
-        btn.setBounds(x, y, 130, 35);
-        btn.setFocusPainted(false);
-        btn.setBorderPainted(false);
-
-        if (active) {
-            btn.setBackground(new Color(98, 55, 230));
-            btn.setForeground(Color.WHITE);
-        } else {
-            btn.setBackground(new Color(250, 250, 255));
-            btn.setForeground(new Color(30, 30, 50));
-        }
-
-        return btn;
+    public void refreshData() {
+        loadData();
     }
 
     private void loadData() {
@@ -175,49 +138,42 @@ public class FormDataMinuman extends JFrame {
                     rs.getString("kategori"),
                     rs.getInt("stok"),
                     rs.getBigDecimal("harga"),
-                    rs.getDate("tanggalMasuk"),
-                    "✎  🗑"
+                    rs.getDate("tanggalMasuk")
                 });
                 total++;
             }
 
-            lblTotalData.setText("Menampilkan 1-" + total + " dari " + total + " data");
+            lblTotalData.setText("Menampilkan " + total + " data");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal load data: " + e.getMessage());
         }
     }
 
-    private void loadStokMenipis() {
-        model.setRowCount(0);
+    private void updateData() {
+        int row = tblMinuman.getSelectedRow();
 
-        try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "SELECT * FROM Barang WHERE stok <= 10 AND stok > 0";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            int total = 0;
-
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getInt("idBarang"),
-                    rs.getString("kodeBarang"),
-                    rs.getString("namaBarang"),
-                    rs.getString("kategori"),
-                    rs.getInt("stok"),
-                    rs.getBigDecimal("harga"),
-                    rs.getDate("tanggalMasuk"),
-                    "✎  🗑"
-                });
-                total++;
-            }
-
-            lblTotalData.setText("Menampilkan " + total + " data stok menipis");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal filter stok: " + e.getMessage());
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang ingin diupdate!");
+            return;
         }
+
+        int idBarang = Integer.parseInt(model.getValueAt(row, 0).toString());
+
+        new FormUpdateBarang(this, idBarang).setVisible(true);
+    }
+
+    private void deleteData() {
+        int row = tblMinuman.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang ingin dihapus!");
+            return;
+        }
+
+        int idBarang = Integer.parseInt(model.getValueAt(row, 0).toString());
+
+        new FormDeleteBarang(this, idBarang).setVisible(true);
     }
 
     public static void main(String[] args) {
