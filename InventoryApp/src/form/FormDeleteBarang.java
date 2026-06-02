@@ -9,6 +9,7 @@ package form;
  * @author alhud
  */
 import koneksi.Koneksi;
+import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
 
@@ -24,55 +25,62 @@ public class FormDeleteBarang extends JFrame {
         this.idBarang = idBarang;
 
         setTitle("Delete Barang");
-        setSize(420, 400);
+        setSize(420, 430);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
+        getContentPane().setBackground(new Color(250, 250, 255));
+
+        JPanel header = new JPanel(null);
+        header.setBounds(0, 0, 420, 55);
+        header.setBackground(new Color(230, 57, 70));
+        add(header);
+
+        JLabel title = new JLabel("Delete Barang");
+        title.setBounds(25, 15, 200, 25);
+        title.setForeground(Color.WHITE);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        header.add(title);
 
         JLabel lblTitle = new JLabel("Yakin ingin menghapus data ini?");
-        lblTitle.setBounds(100, 25, 250, 30);
+        lblTitle.setBounds(95, 75, 250, 30);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 14));
         add(lblTitle);
 
-        lblId = new JLabel();
-        lblId.setBounds(50, 80, 300, 25);
-        add(lblId);
-
-        lblKode = new JLabel();
-        lblKode.setBounds(50, 110, 300, 25);
-        add(lblKode);
-
-        lblNama = new JLabel();
-        lblNama.setBounds(50, 140, 300, 25);
-        add(lblNama);
-
-        lblKategori = new JLabel();
-        lblKategori.setBounds(50, 170, 300, 25);
-        add(lblKategori);
-
-        lblStok = new JLabel();
-        lblStok.setBounds(50, 200, 300, 25);
-        add(lblStok);
-
-        lblHarga = new JLabel();
-        lblHarga.setBounds(50, 230, 300, 25);
-        add(lblHarga);
-
-        lblTanggal = new JLabel();
-        lblTanggal.setBounds(50, 260, 300, 25);
-        add(lblTanggal);
+        lblId = createDetailLabel(50, 120);
+        lblKode = createDetailLabel(50, 150);
+        lblNama = createDetailLabel(50, 180);
+        lblKategori = createDetailLabel(50, 210);
+        lblStok = createDetailLabel(50, 240);
+        lblHarga = createDetailLabel(50, 270);
+        lblTanggal = createDetailLabel(50, 300);
 
         JButton btnBatal = new JButton("Batal");
-        btnBatal.setBounds(80, 310, 100, 35);
+        btnBatal.setBounds(80, 350, 100, 35);
+        btnBatal.setBackground(Color.WHITE);
+        btnBatal.setForeground(new Color(30, 30, 50));
+        btnBatal.setFocusPainted(false);
         add(btnBatal);
 
         JButton btnHapus = new JButton("Hapus");
-        btnHapus.setBounds(220, 310, 100, 35);
+        btnHapus.setBounds(220, 350, 100, 35);
+        btnHapus.setBackground(new Color(230, 57, 70));
+        btnHapus.setForeground(Color.WHITE);
+        btnHapus.setFocusPainted(false);
         add(btnHapus);
 
         btnBatal.addActionListener(e -> dispose());
         btnHapus.addActionListener(e -> hapusData());
 
         loadData();
+    }
+
+    private JLabel createDetailLabel(int x, int y) {
+        JLabel label = new JLabel();
+        label.setBounds(x, y, 330, 25);
+        label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        add(label);
+        return label;
     }
 
     private void loadData() {

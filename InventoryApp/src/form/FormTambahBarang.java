@@ -9,6 +9,7 @@ package form;
  * @author alhud
  */
 import koneksi.Koneksi;
+import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
 
@@ -22,38 +23,56 @@ public class FormTambahBarang extends JFrame {
         this.parent = parent;
 
         setTitle("Tambah Barang");
-        setSize(400, 430);
+        setSize(400, 460);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
+        getContentPane().setBackground(new Color(250, 250, 255));
 
-        addLabel("Kode Barang", 30);
-        txtKode = addText(30);
+        JPanel header = new JPanel(null);
+        header.setBounds(0, 0, 400, 55);
+        header.setBackground(new Color(98, 55, 230));
+        add(header);
 
-        addLabel("Nama Barang", 75);
-        txtNama = addText(75);
+        JLabel title = new JLabel("Tambah Barang");
+        title.setBounds(25, 15, 200, 25);
+        title.setForeground(Color.WHITE);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        header.add(title);
 
-        addLabel("Kategori", 120);
+        addLabel("Kode Barang", 80);
+        txtKode = addText(80);
+
+        addLabel("Nama Barang", 125);
+        txtNama = addText(125);
+
+        addLabel("Kategori", 170);
         cmbKategori = new JComboBox<>(new String[]{"Teh", "Jus", "Air Mineral", "Kopi", "Susu"});
-        cmbKategori.setBounds(160, 120, 180, 30);
+        cmbKategori.setBounds(160, 170, 180, 30);
         add(cmbKategori);
 
-        addLabel("Stok", 165);
-        txtStok = addText(165);
+        addLabel("Stok", 215);
+        txtStok = addText(215);
 
-        addLabel("Harga", 210);
-        txtHarga = addText(210);
+        addLabel("Harga", 260);
+        txtHarga = addText(260);
 
-        addLabel("Tanggal Masuk", 255);
-        txtTanggal = addText(255);
+        addLabel("Tanggal Masuk", 305);
+        txtTanggal = addText(305);
         txtTanggal.setText("2026-06-02");
 
         JButton btnBatal = new JButton("Batal");
-        btnBatal.setBounds(80, 320, 100, 35);
+        btnBatal.setBounds(80, 370, 100, 35);
+        btnBatal.setBackground(Color.WHITE);
+        btnBatal.setForeground(new Color(30, 30, 50));
+        btnBatal.setFocusPainted(false);
         add(btnBatal);
 
         JButton btnSimpan = new JButton("Simpan");
-        btnSimpan.setBounds(210, 320, 100, 35);
+        btnSimpan.setBounds(210, 370, 100, 35);
+        btnSimpan.setBackground(new Color(98, 55, 230));
+        btnSimpan.setForeground(Color.WHITE);
+        btnSimpan.setFocusPainted(false);
         add(btnSimpan);
 
         btnBatal.addActionListener(e -> dispose());
@@ -63,6 +82,7 @@ public class FormTambahBarang extends JFrame {
     private void addLabel(String text, int y) {
         JLabel label = new JLabel(text);
         label.setBounds(30, y, 120, 25);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 13));
         add(label);
     }
 
