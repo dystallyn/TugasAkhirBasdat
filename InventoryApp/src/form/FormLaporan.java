@@ -22,7 +22,6 @@ public class FormLaporan extends JFrame {
 
     private final String PATH_ICON_HEADER_LAPORAN = "/assets/laporan.png";
     private final String PATH_ICON_INFO = "";
-    private final String PATH_ICON_ADMIN = "";
  
 
     private JTable tblLaporan;
@@ -106,33 +105,12 @@ public class FormLaporan extends JFrame {
         lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblSub.setBounds(355, 60, 350, 20);
         add(lblSub);
-
-  
-        JPanel panelAdmin = new JPanel(null);
-        panelAdmin.setBounds(1200, 35, 120, 40);
-        panelAdmin.setBackground(Color.WHITE);
-        add(panelAdmin);
-
-        JLabel lblAvatar = new JLabel(getIcon(PATH_ICON_ADMIN, 32, 32));
-        lblAvatar.setBounds(5, 4, 32, 32);
-        panelAdmin.add(lblAvatar);
-
-        JLabel lblAdminName = new JLabel("Admin ▾");
-        lblAdminName.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        lblAdminName.setBounds(45, 10, 70, 20);
-        panelAdmin.add(lblAdminName);
-
-        JLabel lblWelcome = new JLabel("Selamat datang, Admin. Berikut ringkasan inventaris.");
-        lblWelcome.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        lblWelcome.setBounds(300, 120, 600, 25);
-        add(lblWelcome);
-
-
+        
         lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 160, new Color(245, 240, 255), "/assets/minuman.png");
         lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 540, 160, new Color(255, 249, 238), "/assets/warn.png");
         lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok.png");
         lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/label.png");
-
+        
         JButton btnSemua = new RoundedButton("Semua Barang", new Color(98, 55, 230), Color.WHITE);
         btnSemua.setBounds(300, 315, 130, 38);
         add(btnSemua);
