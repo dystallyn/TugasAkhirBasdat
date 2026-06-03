@@ -6,7 +6,7 @@ package form;
 
 /**
  *
- * @author alhud
+ * @author RAVINA
  */
 
 import koneksi.Koneksi;
