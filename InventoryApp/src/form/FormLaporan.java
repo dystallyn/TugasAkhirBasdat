@@ -22,6 +22,7 @@ public class FormLaporan extends JFrame {
 
     private final String PATH_ICON_HEADER_LAPORAN = "/assets/laporan.png";
     private final String PATH_ICON_INFO = "";
+    private final String PATH_ICON_ADMIN = "";
  
 
     private JTable tblLaporan;
