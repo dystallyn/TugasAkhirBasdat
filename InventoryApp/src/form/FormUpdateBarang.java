@@ -19,70 +19,63 @@ public class FormUpdateBarang extends JFrame {
     private FormDataMinuman parent;
     private int idBarang;
 
-    private JTextField txtKode;
-    private JTextField txtNama;
+    private JTextField txtKode, txtNama, txtStok, txtHarga, txtTanggal;
     private JComboBox<String> cmbKategori;
-    private JTextField txtStok;
-    private JTextField txtHarga;
-    private JTextField txtTanggal;
 
     public FormUpdateBarang(FormDataMinuman parent, int idBarang) {
         this.parent = parent;
         this.idBarang = idBarang;
-
         initComponents();
         loadData();
     }
 
     private void initComponents() {
         setTitle("Update Minuman");
-        setSize(430, 560);
+        setSize(430, 590);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
         getContentPane().setBackground(Color.WHITE);
 
         JPanel header = new JPanel(null);
-        header.setBounds(0, 0, 430, 75);
+        header.setBounds(0, 0, 430, 85);
         header.setBackground(new Color(98, 55, 230));
         add(header);
 
         JLabel lblTitle = new JLabel("Update Minuman");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 21));
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
         lblTitle.setForeground(Color.WHITE);
-        lblTitle.setBounds(30, 20, 250, 35);
+        lblTitle.setBounds(30, 25, 260, 35);
         header.add(lblTitle);
 
-        label("Kode Minuman", 45, 115);
-        txtKode = field(190, 110);
+        label("Kode Minuman", 45, 120);
+        txtKode = field(190, 115);
 
-        label("Nama Minuman", 45, 170);
-        txtNama = field(190, 165);
+        label("Nama Minuman", 45, 175);
+        txtNama = field(190, 170);
 
-        label("Kategori", 45, 225);
-        cmbKategori = new JComboBox<>(new String[]{
-            "Teh", "Jus", "Air Mineral", "Kopi", "Susu"
-        });
-        cmbKategori.setBounds(190, 220, 200, 38);
+        label("Kategori", 45, 230);
+        cmbKategori = new JComboBox<>(new String[]{"Teh", "Jus", "Air Mineral", "Kopi", "Susu"});
+        cmbKategori.setBounds(190, 225, 220, 40);
         cmbKategori.setFont(new Font("Segoe UI", Font.BOLD, 13));
         cmbKategori.setBackground(Color.WHITE);
         add(cmbKategori);
 
-        label("Stok", 45, 280);
-        txtStok = field(190, 275);
+        label("Stok", 45, 285);
+        txtStok = field(190, 280);
 
-        label("Harga", 45, 335);
-        txtHarga = field(190, 330);
+        label("Harga", 45, 340);
+        txtHarga = field(190, 335);
 
-        label("Tanggal Masuk", 45, 390);
-        txtTanggal = field(190, 385);
+        label("Tanggal Masuk", 45, 395);
+        txtTanggal = field(190, 390);
 
         JButton btnBatal = new RoundedButton("Batal", Color.WHITE, new Color(30, 30, 50));
-        btnBatal.setBounds(70, 465, 130, 42);
+        btnBatal.setBounds(65, 490, 145, 48);
         add(btnBatal);
 
         JButton btnUpdate = new RoundedButton("Update", new Color(98, 55, 230), Color.WHITE);
-        btnUpdate.setBounds(230, 465, 130, 42);
+        btnUpdate.setBounds(225, 490, 145, 48);
         add(btnUpdate);
 
         btnBatal.addActionListener(e -> dispose());
@@ -99,14 +92,10 @@ public class FormUpdateBarang extends JFrame {
 
     private JTextField field(int x, int y) {
         JTextField txt = new JTextField();
-        txt.setBounds(x, y, 200, 38);
+        txt.setBounds(x, y, 220, 40);
         txt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        txt.setMargin(new Insets(0, 8, 0, 8));
+        txt.setMargin(new Insets(0, 10, 0, 10));
         txt.setBorder(BorderFactory.createLineBorder(new Color(220, 225, 235)));
-        return addField(txt);
-    }
-
-    private JTextField addField(JTextField txt) {
         add(txt);
         return txt;
     }
@@ -114,7 +103,6 @@ public class FormUpdateBarang extends JFrame {
     private void loadData() {
         try {
             Connection conn = Koneksi.getConnection();
-
             String sql = "SELECT * FROM Barang WHERE idBarang = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idBarang);
@@ -170,7 +158,6 @@ public class FormUpdateBarang extends JFrame {
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Data berhasil diupdate!");
-
             parent.refreshData();
             dispose();
 
@@ -201,25 +188,16 @@ public class FormUpdateBarang extends JFrame {
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
 
-            g2.setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON
-            );
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             g2.setColor(bgColor);
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
 
             if (bgColor.equals(Color.WHITE)) {
-    g2.setColor(new Color(220, 225, 235));
-    g2.setStroke(new BasicStroke(1.5f));
-
-    g2.drawRoundRect(
-        1, 1,
-        getWidth() - 3,
-        getHeight() - 3,
-        18, 18
-    );
-}
+                g2.setColor(new Color(220, 225, 235));
+                g2.setStroke(new BasicStroke(1.5f));
+                g2.drawRoundRect(1, 1, getWidth() - 3, getHeight() - 3, 18, 18);
+            }
 
             super.paintComponent(g);
             g2.dispose();
