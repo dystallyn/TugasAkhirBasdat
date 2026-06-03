@@ -17,13 +17,8 @@ public class Koneksi {
     public static Connection getConnection() {
         try {
 
-            String url =
-                "jdbc:sqlserver://LAPTOP-GMPEQVN5;"
-                + "databaseName=InventoryDB;"
-                + "encrypt=false;"
-                + "trustServerCertificate=true";
-
-            String user = "Db_Con";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=Inventory;encrypt=true;trustServerCertificate=true;";
+            String user = "basdat";
             String pass = "123"; 
 
             conn = DriverManager.getConnection(url, user, pass);
