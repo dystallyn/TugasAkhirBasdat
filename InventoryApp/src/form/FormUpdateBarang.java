@@ -43,68 +43,70 @@ public class FormUpdateBarang extends JFrame {
         getContentPane().setBackground(Color.WHITE);
 
         JPanel header = new JPanel(null);
-        header.setBounds(0, 0, 430, 70);
+        header.setBounds(0, 0, 430, 75);
         header.setBackground(new Color(98, 55, 230));
         add(header);
 
         JLabel lblTitle = new JLabel("Update Minuman");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 21));
         lblTitle.setForeground(Color.WHITE);
-        lblTitle.setBounds(28, 18, 250, 35);
+        lblTitle.setBounds(30, 20, 250, 35);
         header.add(lblTitle);
 
-        JLabel lblKode = label("Kode Minuman", 40, 105);
-        txtKode = field(190, 100);
+        label("Kode Minuman", 45, 115);
+        txtKode = field(190, 110);
 
-        JLabel lblNama = label("Nama Minuman", 40, 160);
-        txtNama = field(190, 155);
+        label("Nama Minuman", 45, 170);
+        txtNama = field(190, 165);
 
-        JLabel lblKategori = label("Kategori", 40, 215);
+        label("Kategori", 45, 225);
         cmbKategori = new JComboBox<>(new String[]{
             "Teh", "Jus", "Air Mineral", "Kopi", "Susu"
         });
-        cmbKategori.setBounds(190, 210, 200, 35);
+        cmbKategori.setBounds(190, 220, 200, 38);
+        cmbKategori.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        cmbKategori.setBackground(Color.WHITE);
         add(cmbKategori);
 
-        JLabel lblStok = label("Stok", 40, 270);
-        txtStok = field(190, 265);
+        label("Stok", 45, 280);
+        txtStok = field(190, 275);
 
-        JLabel lblHarga = label("Harga", 40, 325);
-        txtHarga = field(190, 320);
+        label("Harga", 45, 335);
+        txtHarga = field(190, 330);
 
-        JLabel lblTanggal = label("Tanggal Masuk", 40, 380);
-        txtTanggal = field(190, 375);
-        txtTanggal.setEditable(true);
+        label("Tanggal Masuk", 45, 390);
+        txtTanggal = field(190, 385);
 
-        JButton btnBatal = new JButton("Batal");
+        JButton btnBatal = new RoundedButton("Batal", Color.WHITE, new Color(30, 30, 50));
         btnBatal.setBounds(70, 465, 130, 42);
-        btnBatal.setFocusPainted(false);
-        btnBatal.setBackground(Color.WHITE);
-        btnBatal.setForeground(new Color(30, 30, 50));
         add(btnBatal);
 
-        JButton btnUpdate = new JButton("Update");
+        JButton btnUpdate = new RoundedButton("Update", new Color(98, 55, 230), Color.WHITE);
         btnUpdate.setBounds(230, 465, 130, 42);
-        btnUpdate.setFocusPainted(false);
-        btnUpdate.setBackground(new Color(98, 55, 230));
-        btnUpdate.setForeground(Color.WHITE);
         add(btnUpdate);
 
         btnBatal.addActionListener(e -> dispose());
         btnUpdate.addActionListener(e -> updateData());
     }
 
-    private JLabel label(String text, int x, int y) {
+    private void label(String text, int x, int y) {
         JLabel lbl = new JLabel(text);
         lbl.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lbl.setForeground(new Color(30, 30, 50));
         lbl.setBounds(x, y, 130, 25);
         add(lbl);
-        return lbl;
     }
 
     private JTextField field(int x, int y) {
         JTextField txt = new JTextField();
-        txt.setBounds(x, y, 200, 35);
+        txt.setBounds(x, y, 200, 38);
+        txt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txt.setMargin(new Insets(0, 8, 0, 8));
+        txt.setBorder(BorderFactory.createLineBorder(new Color(220, 225, 235)));
+        return addField(txt);
+    }
+
+    private JTextField addField(JTextField txt) {
         add(txt);
         return txt;
     }
@@ -137,7 +139,8 @@ public class FormUpdateBarang extends JFrame {
         if (txtKode.getText().trim().isEmpty()
                 || txtNama.getText().trim().isEmpty()
                 || txtStok.getText().trim().isEmpty()
-                || txtHarga.getText().trim().isEmpty()) {
+                || txtHarga.getText().trim().isEmpty()
+                || txtTanggal.getText().trim().isEmpty()) {
 
             JOptionPane.showMessageDialog(this, "Semua data wajib diisi!");
             return;
@@ -173,8 +176,53 @@ public class FormUpdateBarang extends JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Stok dan harga harus berupa angka!");
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Format tanggal harus yyyy-MM-dd!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal update data: " + e.getMessage());
+        }
+    }
+
+    class RoundedButton extends JButton {
+
+        private Color bgColor;
+
+        public RoundedButton(String text, Color bgColor, Color fgColor) {
+            super(text);
+            this.bgColor = bgColor;
+            setForeground(fgColor);
+            setFocusPainted(false);
+            setBorderPainted(false);
+            setContentAreaFilled(false);
+            setOpaque(false);
+            setFont(new Font("Segoe UI", Font.BOLD, 13));
+        }
+
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+
+            g2.setRenderingHint(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON
+            );
+
+            g2.setColor(bgColor);
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
+
+            if (bgColor.equals(Color.WHITE)) {
+    g2.setColor(new Color(220, 225, 235));
+    g2.setStroke(new BasicStroke(1.5f));
+
+    g2.drawRoundRect(
+        1, 1,
+        getWidth() - 3,
+        getHeight() - 3,
+        18, 18
+    );
+}
+
+            super.paintComponent(g);
+            g2.dispose();
         }
     }
 }
