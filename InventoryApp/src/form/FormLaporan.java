@@ -44,7 +44,7 @@ public class FormLaporan extends JFrame {
     }
     
     private void initComponents() {
-        setTitle("Laporan Stok Barang");
+        setTitle("Laporan Stok Minuman");
         setSize(1366, 768);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
@@ -101,7 +101,7 @@ public class FormLaporan extends JFrame {
         lblTitle.setBounds(355, 30, 350, 30); // Disesuaikan posisi Y-nya agar seimbang
         add(lblTitle);
 
-        JLabel lblSub = new JLabel("Lihat laporan stok barang dalam sistem");
+        JLabel lblSub = new JLabel("Lihat laporan stok minuman dalam sistem");
         lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblSub.setBounds(355, 60, 350, 20);
         add(lblSub);
@@ -111,7 +111,7 @@ public class FormLaporan extends JFrame {
         lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok.png");
         lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/label.png");
         
-        JButton btnSemua = new RoundedButton("Semua Barang", new Color(98, 55, 230), Color.WHITE);
+        JButton btnSemua = new RoundedButton("Semua Minuman", new Color(98, 55, 230), Color.WHITE);
         btnSemua.setBounds(300, 315, 130, 38);
         add(btnSemua);
 
@@ -125,7 +125,7 @@ public class FormLaporan extends JFrame {
         btnFilterHabis.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 235), 1, true));
         add(btnFilterHabis);
 
-        txtCari = new JTextField("Cari nama barang...");
+        txtCari = new JTextField("Cari nama minuman...");
         txtCari.setBounds(1080, 315, 250, 38);
         txtCari.setForeground(Color.GRAY);
         txtCari.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -155,14 +155,14 @@ public class FormLaporan extends JFrame {
 
         txtCari.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent e) {
-                if (txtCari.getText().equals("Cari nama barang...")) {
+                if (txtCari.getText().equals("Cari nama minuman...")) {
                     txtCari.setText("");
                     txtCari.setForeground(Color.BLACK);
                 }
             }
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (txtCari.getText().trim().isEmpty()) {
-                    txtCari.setText("Cari nama barang...");
+                    txtCari.setText("Cari nama minuman...");
                     txtCari.setForeground(Color.GRAY);
                 }
             }
@@ -185,7 +185,7 @@ public class FormLaporan extends JFrame {
         lblDaftar.setBounds(20, 15, 200, 22);
         panelTableContainer.add(lblDaftar);
 
-        JLabel lblDaftarSub = new JLabel("Ringkasan stok barang dalam sistem");
+        JLabel lblDaftarSub = new JLabel("Ringkasan stok minuman dalam sistem");
         lblDaftarSub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblDaftarSub.setForeground(Color.GRAY);
         lblDaftarSub.setBounds(20, 37, 300, 18);
@@ -196,7 +196,7 @@ public class FormLaporan extends JFrame {
         };
 
         model.addColumn("ID");
-        model.addColumn("Nama Barang");
+        model.addColumn("Nama Minuman");
         model.addColumn("Kategori");
         model.addColumn("Stok");
         model.addColumn("Harga (Rp)");
@@ -378,7 +378,7 @@ public class FormLaporan extends JFrame {
     private void loadTableData() {
         model.setRowCount(0);
         String cari = txtCari.getText().trim();
-        if (cari.equals("Cari nama barang...")) cari = "";
+        if (cari.equals("Cari nama minuman...")) cari = "";
 
         try {
             Connection conn = Koneksi.getConnection();
