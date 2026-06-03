@@ -20,9 +20,9 @@ import java.util.Date;
 public class FormLaporan extends JFrame {
     
     // Variabel Penampung Aset Gambar (Silakan isi path jika sudah ada)
-    private final String PATH_ICON_HEADER_LAPORAN = "";
+    private final String PATH_ICON_HEADER_LAPORAN = "/assets/laporan.png";
     private final String PATH_ICON_INFO = "";
-    private final String PATH_ICON_ADMIN = "";
+ 
 
     // Deklarasi Komponen UI
     private JTable tblLaporan;
@@ -134,10 +134,10 @@ public class FormLaporan extends JFrame {
         // ==========================================
         // CARDS STATISTIK SECTION
         // ==========================================
-        lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 160, new Color(245, 240, 255), "/assets/total_minuman.png");
-        lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 540, 160, new Color(255, 249, 238), "/assets/stok_menipis.png");
-        lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok_habis.png");
-        lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/total_kategori.png");
+        lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 160, new Color(245, 240, 255), "/assets/minuman.png");
+        lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 540, 160, new Color(255, 249, 238), "/assets/warn.png");
+        lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok.png");
+        lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/label.png");
 
         // ==========================================
         // FILTER & CONTROLS SECTION
