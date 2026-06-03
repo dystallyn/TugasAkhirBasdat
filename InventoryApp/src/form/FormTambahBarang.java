@@ -8,92 +8,115 @@ package form;
  *
  * @author alhud
  */
+
 import koneksi.Koneksi;
 import java.awt.*;
 import java.sql.*;
+import java.time.LocalDate;
 import javax.swing.*;
 
 public class FormTambahBarang extends JFrame {
 
-    private JTextField txtKode, txtNama, txtStok, txtHarga, txtTanggal;
-    private JComboBox<String> cmbKategori;
     private FormDataMinuman parent;
+
+    private JTextField txtKode;
+    private JTextField txtNama;
+    private JComboBox<String> cmbKategori;
+    private JTextField txtStok;
+    private JTextField txtHarga;
+    private JTextField txtTanggal;
 
     public FormTambahBarang(FormDataMinuman parent) {
         this.parent = parent;
+        initComponents();
+    }
 
-        setTitle("Tambah Barang");
-        setSize(400, 460);
+    private void initComponents() {
+        setTitle("Tambah Minuman");
+        setSize(430, 560);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
-        getContentPane().setBackground(new Color(250, 250, 255));
+        getContentPane().setBackground(Color.WHITE);
 
         JPanel header = new JPanel(null);
-        header.setBounds(0, 0, 400, 55);
+        header.setBounds(0, 0, 430, 70);
         header.setBackground(new Color(98, 55, 230));
         add(header);
 
-        JLabel title = new JLabel("Tambah Barang");
-        title.setBounds(25, 15, 200, 25);
-        title.setForeground(Color.WHITE);
-        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        header.add(title);
+        JLabel lblTitle = new JLabel("Tambah Minuman");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setBounds(28, 18, 250, 35);
+        header.add(lblTitle);
 
-        addLabel("Kode Barang", 80);
-        txtKode = addText(80);
+        JLabel lblKode = label("Kode Minuman", 40, 105);
+        txtKode = field(190, 100);
 
-        addLabel("Nama Barang", 125);
-        txtNama = addText(125);
+        JLabel lblNama = label("Nama Minuman", 40, 160);
+        txtNama = field(190, 155);
 
-        addLabel("Kategori", 170);
-        cmbKategori = new JComboBox<>(new String[]{"Teh", "Jus", "Air Mineral", "Kopi", "Susu"});
-        cmbKategori.setBounds(160, 170, 180, 30);
+        JLabel lblKategori = label("Kategori", 40, 215);
+        cmbKategori = new JComboBox<>(new String[]{
+            "Teh", "Jus", "Air Mineral", "Kopi", "Susu"
+        });
+        cmbKategori.setBounds(190, 210, 200, 35);
         add(cmbKategori);
 
-        addLabel("Stok", 215);
-        txtStok = addText(215);
+        JLabel lblStok = label("Stok", 40, 270);
+        txtStok = field(190, 265);
 
-        addLabel("Harga", 260);
-        txtHarga = addText(260);
+        JLabel lblHarga = label("Harga", 40, 325);
+        txtHarga = field(190, 320);
 
-        addLabel("Tanggal Masuk", 305);
-        txtTanggal = addText(305);
-        txtTanggal.setText("2026-06-02");
+        JLabel lblTanggal = label("Tanggal Masuk", 40, 380);
+        txtTanggal = field(190, 375);
+        txtTanggal.setText(LocalDate.now().toString());
+        txtTanggal.setEditable(true);
 
         JButton btnBatal = new JButton("Batal");
-        btnBatal.setBounds(80, 370, 100, 35);
+        btnBatal.setBounds(70, 465, 130, 42);
+        btnBatal.setFocusPainted(false);
         btnBatal.setBackground(Color.WHITE);
         btnBatal.setForeground(new Color(30, 30, 50));
-        btnBatal.setFocusPainted(false);
         add(btnBatal);
 
         JButton btnSimpan = new JButton("Simpan");
-        btnSimpan.setBounds(210, 370, 100, 35);
+        btnSimpan.setBounds(230, 465, 130, 42);
+        btnSimpan.setFocusPainted(false);
         btnSimpan.setBackground(new Color(98, 55, 230));
         btnSimpan.setForeground(Color.WHITE);
-        btnSimpan.setFocusPainted(false);
         add(btnSimpan);
 
         btnBatal.addActionListener(e -> dispose());
         btnSimpan.addActionListener(e -> simpanData());
     }
 
-    private void addLabel(String text, int y) {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, y, 120, 25);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        add(label);
+    private JLabel label(String text, int x, int y) {
+        JLabel lbl = new JLabel(text);
+        lbl.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lbl.setBounds(x, y, 130, 25);
+        add(lbl);
+        return lbl;
     }
 
-    private JTextField addText(int y) {
-        JTextField text = new JTextField();
-        text.setBounds(160, y, 180, 30);
-        add(text);
-        return text;
+    private JTextField field(int x, int y) {
+        JTextField txt = new JTextField();
+        txt.setBounds(x, y, 200, 35);
+        add(txt);
+        return txt;
     }
 
     private void simpanData() {
+        if (txtKode.getText().trim().isEmpty()
+                || txtNama.getText().trim().isEmpty()
+                || txtStok.getText().trim().isEmpty()
+                || txtHarga.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Semua data wajib diisi!");
+            return;
+        }
+
         try {
             Connection conn = Koneksi.getConnection();
 
@@ -102,19 +125,22 @@ public class FormTambahBarang extends JFrame {
                     + "VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, txtKode.getText());
-            ps.setString(2, txtNama.getText());
+            ps.setString(1, txtKode.getText().trim());
+            ps.setString(2, txtNama.getText().trim());
             ps.setString(3, cmbKategori.getSelectedItem().toString());
-            ps.setInt(4, Integer.parseInt(txtStok.getText()));
-            ps.setBigDecimal(5, new java.math.BigDecimal(txtHarga.getText()));
-            ps.setString(6, txtTanggal.getText());
+            ps.setInt(4, Integer.parseInt(txtStok.getText().trim()));
+            ps.setBigDecimal(5, new java.math.BigDecimal(txtHarga.getText().trim()));
+            ps.setDate(6, java.sql.Date.valueOf(txtTanggal.getText().trim()));
 
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
+
             parent.refreshData();
             dispose();
 
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Stok dan harga harus berupa angka!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal tambah data: " + e.getMessage());
         }

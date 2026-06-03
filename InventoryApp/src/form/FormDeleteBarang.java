@@ -15,92 +15,230 @@ import javax.swing.*;
 
 public class FormDeleteBarang extends JFrame {
 
-    private int idBarang;
     private FormDataMinuman parent;
+    private int idBarang;
 
-    private JLabel lblId, lblKode, lblNama, lblKategori, lblStok, lblHarga, lblTanggal;
+    private JLabel valueKode;
+    private JLabel valueNama;
+    private JLabel valueKategori;
+    private JLabel valueStok;
+    private JLabel valueHarga;
+    private JLabel valueTanggal;
 
     public FormDeleteBarang(FormDataMinuman parent, int idBarang) {
         this.parent = parent;
         this.idBarang = idBarang;
 
+        initComponents();
+        loadData();
+    }
+
+    private void initComponents() {
         setTitle("Delete Barang");
-        setSize(420, 430);
+        setSize(430, 560);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
-        getContentPane().setBackground(new Color(250, 250, 255));
+        getContentPane().setBackground(Color.WHITE);
 
         JPanel header = new JPanel(null);
-        header.setBounds(0, 0, 420, 55);
-        header.setBackground(new Color(230, 57, 70));
+        header.setBounds(0, 0, 430, 70);
+        header.setBackground(new Color(239, 51, 64));
         add(header);
 
-        JLabel title = new JLabel("Delete Barang");
-        title.setBounds(25, 15, 200, 25);
-        title.setForeground(Color.WHITE);
-        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        header.add(title);
+        JLabel lblTitle = new JLabel("Delete Barang");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setBounds(28, 18, 250, 35);
+        header.add(lblTitle);
 
-        JLabel lblTitle = new JLabel("Yakin ingin menghapus data ini?");
-        lblTitle.setBounds(95, 75, 250, 30);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        add(lblTitle);
+        JLabel lblIcon = new JLabel(getIcon("/assets/delete_big.png", 78, 78));
+        lblIcon.setBounds(176, 95, 78, 78);
+        add(lblIcon);
 
-        lblId = createDetailLabel(50, 120);
-        lblKode = createDetailLabel(50, 150);
-        lblNama = createDetailLabel(50, 180);
-        lblKategori = createDetailLabel(50, 210);
-        lblStok = createDetailLabel(50, 240);
-        lblHarga = createDetailLabel(50, 270);
-        lblTanggal = createDetailLabel(50, 300);
+        JLabel lblConfirm = new JLabel(
+                "<html><div style='text-align:center;'>Yakin ingin menghapus<br>data ini?</div></html>",
+                SwingConstants.CENTER
+        );
+        lblConfirm.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblConfirm.setBounds(90, 180, 250, 55);
+        add(lblConfirm);
+
+        JPanel detailPanel = new JPanel(null);
+        detailPanel.setBounds(55, 250, 320, 155);
+        detailPanel.setBackground(new Color(248, 248, 255));
+        detailPanel.setBorder(BorderFactory.createLineBorder(new Color(235, 235, 245)));
+        add(detailPanel);
+
+        valueKode = new JLabel();
+        valueNama = new JLabel();
+        valueKategori = new JLabel();
+        valueStok = new JLabel();
+        valueHarga = new JLabel();
+        valueTanggal = new JLabel();
+
+        addDetailRow(
+                detailPanel,
+                "Kode Barang",
+                valueKode,
+                15,
+                5
+        );
+
+        addDetailRow(
+                detailPanel,
+                "Nama Barang",
+                valueNama,
+                15,
+                30
+        );
+
+        addDetailRow(
+                detailPanel,
+                "Kategori",
+                valueKategori,
+                15,
+                55
+        );
+
+        addDetailRow(
+                detailPanel,
+                "Stok",
+                valueStok,
+                15,
+                80
+        );
+
+        addDetailRow(
+                detailPanel,
+                "Harga",
+                valueHarga,
+                15,
+                105
+        );
+
+        addDetailRow(
+                detailPanel,
+                "Tanggal Masuk",
+                valueTanggal,
+                15,
+                130
+        );
 
         JButton btnBatal = new JButton("Batal");
-        btnBatal.setBounds(80, 350, 100, 35);
+        btnBatal.setBounds(55, 455, 130, 42);
+        btnBatal.setFocusPainted(false);
         btnBatal.setBackground(Color.WHITE);
         btnBatal.setForeground(new Color(30, 30, 50));
-        btnBatal.setFocusPainted(false);
         add(btnBatal);
 
         JButton btnHapus = new JButton("Hapus");
-        btnHapus.setBounds(220, 350, 100, 35);
-        btnHapus.setBackground(new Color(230, 57, 70));
-        btnHapus.setForeground(Color.WHITE);
+        btnHapus.setBounds(245, 455, 130, 42);
         btnHapus.setFocusPainted(false);
+        btnHapus.setBackground(new Color(239, 51, 64));
+        btnHapus.setForeground(Color.WHITE);
         add(btnHapus);
 
         btnBatal.addActionListener(e -> dispose());
         btnHapus.addActionListener(e -> hapusData());
-
-        loadData();
     }
 
-    private JLabel createDetailLabel(int x, int y) {
-        JLabel label = new JLabel();
-        label.setBounds(x, y, 330, 25);
-        label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        add(label);
-        return label;
+    private void addDetailRow(
+            JPanel panel,
+            String labelText,
+            JLabel valueLabel,
+            int x,
+            int y) {
+
+        JLabel label =
+                new JLabel(labelText);
+
+        label.setFont(
+                new Font(
+                        "Segoe UI",
+                        Font.PLAIN,
+                        13
+                )
+        );
+
+        label.setBounds(
+                x,
+                y,
+                105,
+                22
+        );
+
+        panel.add(label);
+
+        JLabel colon =
+                new JLabel(":");
+
+        colon.setFont(
+                new Font(
+                        "Segoe UI",
+                        Font.PLAIN,
+                        13
+                )
+        );
+
+        colon.setBounds(
+                x + 115,
+                y,
+                10,
+                22
+        );
+
+        panel.add(colon);
+
+        valueLabel.setFont(
+                new Font(
+                        "Segoe UI",
+                        Font.PLAIN,
+                        13
+                )
+        );
+
+        valueLabel.setBounds(
+                x + 130,
+                y,
+                170,
+                22
+        );
+
+        panel.add(valueLabel);
     }
 
     private void loadData() {
         try {
             Connection conn = Koneksi.getConnection();
 
-            String sql = "SELECT * FROM Barang WHERE idBarang=?";
+            String sql = "SELECT * FROM Barang WHERE idBarang = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idBarang);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                lblId.setText("ID Barang : " + rs.getInt("idBarang"));
-                lblKode.setText("Kode Barang : " + rs.getString("kodeBarang"));
-                lblNama.setText("Nama Barang : " + rs.getString("namaBarang"));
-                lblKategori.setText("Kategori : " + rs.getString("kategori"));
-                lblStok.setText("Stok : " + rs.getInt("stok"));
-                lblHarga.setText("Harga : " + rs.getBigDecimal("harga"));
-                lblTanggal.setText("Tanggal Masuk : " + rs.getDate("tanggalMasuk"));
+                valueKode.setText(
+                    rs.getString("kodeBarang"));
+
+                valueNama.setText(
+                        rs.getString("namaBarang"));
+
+                valueKategori.setText(
+                        rs.getString("kategori"));
+
+                valueStok.setText(
+                        String.valueOf(
+                                rs.getInt("stok")));
+
+                valueHarga.setText(
+                        rs.getBigDecimal("harga")
+                                .toString());
+
+                valueTanggal.setText(
+                        rs.getDate("tanggalMasuk")
+                                .toString());
             }
 
         } catch (Exception e) {
@@ -112,18 +250,24 @@ public class FormDeleteBarang extends JFrame {
         try {
             Connection conn = Koneksi.getConnection();
 
-            String sql = "DELETE FROM Barang WHERE idBarang=?";
+            String sql = "DELETE FROM Barang WHERE idBarang = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idBarang);
-
             ps.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+
             parent.refreshData();
             dispose();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Gagal hapus data: " + e.getMessage());
         }
+    }
+
+    private ImageIcon getIcon(String path, int width, int height) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(path));
+        Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(img);
     }
 }
