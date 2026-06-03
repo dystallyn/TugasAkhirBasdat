@@ -19,12 +19,11 @@ import java.util.Date;
 
 public class FormLaporan extends JFrame {
     
-    // Variabel Penampung Aset Gambar (Silakan isi path jika sudah ada)
+
     private final String PATH_ICON_HEADER_LAPORAN = "/assets/laporan.png";
     private final String PATH_ICON_INFO = "";
  
 
-    // Deklarasi Komponen UI
     private JTable tblLaporan;
     private DefaultTableModel model;
     private JTextField txtCari;
@@ -32,7 +31,7 @@ public class FormLaporan extends JFrame {
     private JLabel lblTotalData, lblWaktuUpdate;
     private JPanel panelPagination;
     
-    // Deklarasi State Kontrol Konten
+  
     private String statusFilter = "Semua";
     private int currentPage = 1;
     private final int pageSize = 5; // Menampilkan 5 baris data per halaman
@@ -53,9 +52,7 @@ public class FormLaporan extends JFrame {
         setLayout(null);
         getContentPane().setBackground(Color.WHITE);
 
-        // ==========================================
-        // SIDEBAR SECTION
-        // ==========================================
+  
         JPanel sidebar = new JPanel(null);
         sidebar.setBounds(0, 0, 230, 900);
         sidebar.setBackground(new Color(250, 250, 255));
@@ -81,7 +78,7 @@ public class FormLaporan extends JFrame {
         sidebar.add(btnLaporan);
         sidebar.add(btnLogout);
 
-        // Aksi Navigasi Menu Sidebar
+  
         btnDashboard.addActionListener(e -> {
             new FormDashboard().setVisible(true);
             dispose();
@@ -94,9 +91,7 @@ public class FormLaporan extends JFrame {
 
         btnLogout.addActionListener(e -> dispose());
         
-        // ==========================================
-        // HEADER & ADMIN PROFILE SECTION
-        // ==========================================
+
         JLabel lblIconHeader = new JLabel(getIcon(PATH_ICON_HEADER_LAPORAN, 40, 40));
         lblIconHeader.setBounds(300, 35, 40, 40);
         add(lblIconHeader);
@@ -111,7 +106,7 @@ public class FormLaporan extends JFrame {
         lblSub.setBounds(355, 60, 350, 20);
         add(lblSub);
 
-        // Komponen Profil Kontrol Admin (Pojok Kanan Atas)
+  
         JPanel panelAdmin = new JPanel(null);
         panelAdmin.setBounds(1200, 35, 120, 40);
         panelAdmin.setBackground(Color.WHITE);
@@ -131,17 +126,12 @@ public class FormLaporan extends JFrame {
         lblWelcome.setBounds(300, 120, 600, 25);
         add(lblWelcome);
 
-        // ==========================================
-        // CARDS STATISTIK SECTION
-        // ==========================================
+
         lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 160, new Color(245, 240, 255), "/assets/minuman.png");
         lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 540, 160, new Color(255, 249, 238), "/assets/warn.png");
         lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok.png");
         lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/label.png");
 
-        // ==========================================
-        // FILTER & CONTROLS SECTION
-        // ==========================================
         JButton btnSemua = new RoundedButton("Semua Barang", new Color(98, 55, 230), Color.WHITE);
         btnSemua.setBounds(300, 315, 130, 38);
         add(btnSemua);
@@ -163,7 +153,6 @@ public class FormLaporan extends JFrame {
         txtCari.setMargin(new Insets(0, 12, 0, 0));
         add(txtCari);
 
-        // Aksi Sistem Pengetikan Pencarian & Filter
         btnSemua.addActionListener(e -> {
             statusFilter = "Semua";
             resetFilterButtons(btnSemua, btnFilterMenipis, btnFilterHabis);
@@ -205,9 +194,7 @@ public class FormLaporan extends JFrame {
             loadTableData();
         });
         
-        // ==========================================
-        // CONTAINER TABEL DATA SECTION
-        // ==========================================
+  
         JPanel panelTableContainer = new JPanel(null);
         panelTableContainer.setBounds(300, 370, 1030, 300);
         panelTableContainer.setBackground(Color.WHITE);
@@ -270,9 +257,6 @@ public class FormLaporan extends JFrame {
         panelPagination.setBackground(Color.WHITE);
         panelTableContainer.add(panelPagination);
 
-        // ==========================================
-        // FOOTER INFO SECTION
-        // ==========================================
         JPanel panelInfo = new JPanel(null);
         panelInfo.setBounds(300, 685, 1030, 55);
         panelInfo.setBackground(new Color(250, 250, 255));
@@ -427,7 +411,7 @@ public class FormLaporan extends JFrame {
                 where += " AND stok = 0 ";
             }
 
-            // Hitung Total Data untuk Pagination
+      
             String countSql = "SELECT COUNT(*) FROM Barang " + where;
             PreparedStatement countPs = conn.prepareStatement(countSql);
             countPs.setString(1, "%" + cari + "%");
@@ -441,7 +425,6 @@ public class FormLaporan extends JFrame {
 
             int offset = (currentPage - 1) * pageSize;
 
-            // Ambil Data Sesuai Limit/Offset (SQL Server Syntax)
             String sql = "SELECT * FROM Barang " + where
                        + " ORDER BY idBarang OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
@@ -539,7 +522,7 @@ public class FormLaporan extends JFrame {
         return String.format("%,.0f", harga).replace(",", ".");
     }
 
-    // Custom Component Status Badge
+
     class StatusBadgeRenderer extends DefaultTableCellRenderer {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             JLabel lbl = new JLabel(value.toString());
@@ -570,7 +553,6 @@ public class FormLaporan extends JFrame {
         }
     }
 
-    // Custom Component Rounded Button
     class RoundedButton extends JButton {
         private final Color bgColor;
         public RoundedButton(String text, Color bgColor, Color fgColor) {
