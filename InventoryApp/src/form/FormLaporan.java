@@ -232,7 +232,7 @@ public class FormLaporan extends JFrame {
         panelTableContainer.add(lblTotalData);
 
         panelPagination = new JPanel(null);
-        panelPagination.setBounds(840, 255, 170, 35);
+        panelPagination.setBounds(710, 255, 300, 35);
         panelPagination.setBackground(Color.WHITE);
         panelTableContainer.add(panelPagination);
 
@@ -259,15 +259,16 @@ public class FormLaporan extends JFrame {
     }
 
     private void resetFilterButtons(JButton active, JButton nonActive1, JButton nonActive2) {
-        active.setBackground(new Color(98, 55, 230));
+        ((RoundedButton) active).setCustomBackground(new Color(98, 55, 230));
         active.setForeground(Color.WHITE);
-        ((RoundedButton)active).setBorder(null);
+        active.setBorder(null);
 
-        nonActive1.setBackground(Color.WHITE);
+        
+        ((RoundedButton) nonActive1).setCustomBackground(Color.WHITE);
         nonActive1.setForeground(new Color(120, 120, 140));
         nonActive1.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 235), 1, true));
 
-        nonActive2.setBackground(Color.WHITE);
+        ((RoundedButton) nonActive2).setCustomBackground(Color.WHITE);
         nonActive2.setForeground(new Color(120, 120, 140));
         nonActive2.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 235), 1, true));
     }
@@ -291,30 +292,30 @@ public class FormLaporan extends JFrame {
 
     private JLabel card(String title, String value, String desc, int x, int y, Color color, String iconPath) {
         JPanel panel = new JPanel(null);
-        panel.setBounds(x, y, 220, 135);
+        panel.setBounds(x, y, 225, 135);
         panel.setBackground(color);
         panel.setBorder(BorderFactory.createLineBorder(new Color(235, 235, 240), 1, true));
         add(panel);
 
-        JLabel lblIcon = new JLabel(getIcon(iconPath, 36, 36));
-        lblIcon.setBounds(20, 20, 36, 36);
+        JLabel lblIcon = new JLabel(getIcon(iconPath, 42, 42));
+        lblIcon.setBounds(20, 45, 45, 45);
         panel.add(lblIcon);
 
         JLabel lblTitle = new JLabel(title);
         lblTitle.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         lblTitle.setForeground(Color.GRAY);
-        lblTitle.setBounds(70, 16, 140, 20);
+        lblTitle.setBounds(82, 18, 135, 20);
         panel.add(lblTitle);
 
         JLabel lblValue = new JLabel(value);
         lblValue.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        lblValue.setBounds(70, 38, 140, 32);
+        lblValue.setBounds(82, 42, 135, 32);
         panel.add(lblValue);
 
         JLabel lblDesc = new JLabel(desc);
         lblDesc.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblDesc.setForeground(Color.LIGHT_GRAY);
-        lblDesc.setBounds(20, 95, 180, 20);
+        lblDesc.setBounds(82, 95, 135, 20);
         panel.add(lblDesc);
 
         return lblValue;
@@ -445,8 +446,11 @@ public class FormLaporan extends JFrame {
             panelPagination.revalidate();
             return;
         }
-
-        int x = 0;
+        
+        int totalTombol = totalPage + 2;
+        int lebarTotalTombol = (totalTombol * 45) + ((totalTombol -1) * 5);
+        int x = panelPagination.getWidth() - lebarTotalTombol;
+        
         JButton btnPrev = new JButton("<");
         btnPrev.setBounds(x, 0, 45, 30);
         btnPrev.setFocusPainted(false);
@@ -533,7 +537,7 @@ public class FormLaporan extends JFrame {
     }
 
     class RoundedButton extends JButton {
-        private final Color bgColor;
+        private Color bgColor;
         public RoundedButton(String text, Color bgColor, Color fgColor) {
             super(text);
             this.bgColor = bgColor;
@@ -544,6 +548,13 @@ public class FormLaporan extends JFrame {
             setOpaque(false);
             setFont(new Font("Segoe UI", Font.BOLD, 13));
         }
+        
+        public void setCustomBackground(Color color) {
+        this.bgColor = color;
+        repaint(); // Paksa gambar ulang button
+        }
+        
+        @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
