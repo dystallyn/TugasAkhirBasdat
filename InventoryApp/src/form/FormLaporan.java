@@ -106,10 +106,10 @@ public class FormLaporan extends JFrame {
         lblSub.setBounds(355, 60, 350, 20);
         add(lblSub);
         
-        lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 160, new Color(245, 240, 255), "/assets/minuman.png");
-        lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 540, 160, new Color(255, 249, 238), "/assets/warn.png");
-        lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok.png");
-        lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/label.png");
+        lblTotalMinuman = card("Total Minuman", "0", "jenis minuman", 300, 160, new Color(245, 240, 255), "/assets/total_minuman.png");
+        lblStokMenipis = card("Stok Menipis", "0", "perlu restock", 540, 160, new Color(255, 249, 238), "/assets/stok_menipis.png");
+        lblStokHabis = card("Stok Habis", "0", "stok = 0 unit", 780, 160, new Color(255, 240, 240), "/assets/stok_habis.png");
+        lblTotalKategori = card("Total Kategori", "0", "kategori minuman", 1020, 160, new Color(240, 247, 255), "/assets/total_kategori.png");
         
         JButton btnSemua = new RoundedButton("Semua Minuman", new Color(98, 55, 230), Color.WHITE);
         btnSemua.setBounds(300, 315, 130, 38);
